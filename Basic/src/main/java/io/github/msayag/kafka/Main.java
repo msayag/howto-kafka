@@ -32,7 +32,7 @@ public class Main {
     }
 
     private static void printUsage() {
-        System.out.println("Please provide the ");
+        System.out.println("Please provide the application mode (producer or consumer)");
         System.out.println("    gradle run -PappArgs=producer");
         System.out.println("  or");
         System.out.println("    gradle run -PappArgs=consumer");
