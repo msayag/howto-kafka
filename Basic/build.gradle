@@ -1,7 +1,7 @@
 group 'KafkaTutorial'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 9
 
@@ -21,4 +21,12 @@ dependencies {
 
     testCompile("org.junit.jupiter:junit-jupiter-api:5.0.1")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.1")
+}
+
+mainClassName = "io.github.msayag.kafka.Main"
+
+run {
+    if (project.hasProperty("mode")) {
+        args mode
+    }
 }

@@ -63,8 +63,4 @@ public class JsonItemConsumer implements ItemConsumer {
     public void close() {
         consumer.close();
     }
-
-    public static void main(String[] args) {
-        new JsonItemConsumer().consume();
-    }
 }

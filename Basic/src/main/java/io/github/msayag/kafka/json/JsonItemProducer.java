@@ -25,7 +25,23 @@ public class JsonItemProducer implements ItemProducer {
     }
 
     @Override
-    public void send(Item item) throws IOException {
+    public void produce() {
+        IntStream.iterate(1, i -> i + 1)
+                .mapToObj(JsonItemProducer::createItem)
+                .forEach(item -> {
+                    try {
+                        send(item);
+                        Thread.sleep(1000);
+                    } catch (IOException e) {
+                        // handle exception
+                    } catch (InterruptedException e) {
+                        // handle exception
+                        Thread.currentThread().interrupt();
+                    }
+                });
+    }
+
+    private void send(Item item) throws IOException {
         String message = mapper.writeValueAsString(item);
         ProducerRecord<String, String> record = new ProducerRecord<>("items", message);
         producer.send(record);
@@ -42,26 +58,6 @@ public class JsonItemProducer implements ItemProducer {
     @Override
     public void close() {
         producer.close();
-    }
-
-    public static void main(String... args) {
-        try (ItemProducer producer = new JsonItemProducer()) {
-            IntStream.iterate(1, i -> i + 1)
-                    .mapToObj(JsonItemProducer::createItem)
-                    .forEach(item -> {
-                        try {
-                            producer.send(item);
-                            Thread.sleep(1000);
-                        } catch (IOException e) {
-                            // handle exception
-                        } catch (InterruptedException e) {
-                            // handle exception
-                            Thread.currentThread().interrupt();
-                        }
-                    });
-        } catch (IOException e) {
-            // handle exception
-        }
     }
 
     private static Item createItem(int i) {
