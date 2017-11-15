@@ -27,6 +27,7 @@ public class ItemConsumer {
         StreamsBuilder builder = new StreamsBuilder();
         builder.<String, Item>stream("items")
                 .mapValues(item -> processItem(item))
+                .peek((key, item) -> System.out.println(item))
                 .to("items2", Produced.with(Serdes.String(), Serdes.String()));
 
         Properties config = getProperties();
