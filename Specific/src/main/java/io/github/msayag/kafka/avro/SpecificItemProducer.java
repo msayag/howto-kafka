@@ -22,7 +22,21 @@ public class SpecificItemProducer implements Closeable {
         producer = createProducer();
     }
 
-    public void send(Item item) {
+    public void produce() {
+        IntStream.iterate(1, i -> i + 1)
+                .mapToObj(SpecificItemProducer::createItem)
+                .forEach(item -> {
+                    try {
+                        send(item);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        // handle exception
+                        Thread.currentThread().interrupt();
+                    }
+                });
+    }
+
+    private void send(Item item) {
         ProducerRecord<String, Item> record = new ProducerRecord<>("items", item);
         try {
             producer.send(record);
@@ -39,26 +53,10 @@ public class SpecificItemProducer implements Closeable {
         props.put(SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
         return new KafkaProducer<>(props);
     }
-
     //    @Override
+
     public void close() {
         producer.close();
-    }
-
-    public static void main(String... args) {
-        try (SpecificItemProducer producer = new SpecificItemProducer()) {
-            IntStream.iterate(1, i -> i + 1)
-                    .mapToObj(SpecificItemProducer::createItem)
-                    .forEach(item -> {
-                        try {
-                            producer.send(item);
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            // handle exception
-                            Thread.currentThread().interrupt();
-                        }
-                    });
-        }
     }
 
     private static Item createItem(int i) {

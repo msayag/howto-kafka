@@ -1,11 +1,7 @@
 package io.github.msayag.kafka;
 
-import io.github.msayag.kafka.api.ItemConsumer;
-import io.github.msayag.kafka.api.ItemProducer;
-import io.github.msayag.kafka.json.JsonItemConsumer;
-import io.github.msayag.kafka.json.JsonItemProducer;
-
-import java.io.IOException;
+import io.github.msayag.kafka.kstream.ItemConsumer;
+import io.github.msayag.kafka.kstream.ItemProducer;
 
 public class Main {
     public static void main(String... args) {
@@ -14,18 +10,13 @@ public class Main {
         } else {
             switch (args[0]) {
                 case "producer":
-                    try (ItemProducer producer = new JsonItemProducer()) {
+                    try (ItemProducer producer = new ItemProducer()) {
                         producer.produce();
-                    } catch (IOException e) {
-                        // handle exception
                     }
                     break;
                 case "consumer":
-                    try (ItemConsumer producer = new JsonItemConsumer()) {
-                        producer.consume();
-                    } catch (IOException e) {
-                        // handle exception
-                    }
+                    ItemConsumer producer = new ItemConsumer();
+                    producer.consume();
                     break;
                 default:
                     System.out.println("Unsupported mode: " + args[0]);

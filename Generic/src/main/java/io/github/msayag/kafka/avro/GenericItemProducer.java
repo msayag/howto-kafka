@@ -12,7 +12,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
@@ -27,17 +26,6 @@ public class GenericItemProducer implements ItemProducer {
     public GenericItemProducer() {
         producer = createProducer();
         schema = createSchema();
-    }
-
-    @Override
-    public void send(Item item) {
-        GenericRecord avroRecord = createAvroRecord(item);
-        ProducerRecord<String, Object> record = new ProducerRecord<>("items", avroRecord);
-        try {
-            producer.send(record);
-        } catch (SerializationException e) {
-            // handle error
-        }
     }
 
     private GenericRecord createAvroRecord(Item item) {
@@ -73,28 +61,33 @@ public class GenericItemProducer implements ItemProducer {
     }
 
     @Override
-    public void close() {
-        producer.close();
+    public void produce() {
+        IntStream.iterate(1, i -> i + 1)
+                .mapToObj(GenericItemProducer::createItem)
+                .forEach(item -> {
+                    try {
+                        send(item);
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        // handle exception
+                        Thread.currentThread().interrupt();
+                    }
+                });
     }
 
-    public static void main(String... args) {
-        try (ItemProducer producer = new GenericItemProducer()) {
-            IntStream.iterate(1, i -> i + 1)
-                    .mapToObj(AvroItemProducer::createItem)
-                    .forEach(item -> {
-                        try {
-                            producer.send(item);
-                            Thread.sleep(100);
-                        } catch (IOException e) {
-                            // handle exception
-                        } catch (InterruptedException e) {
-                            // handle exception
-                            Thread.currentThread().interrupt();
-                        }
-                    });
-        } catch (IOException e) {
-            // handle exception
+    private void send(Item item) {
+        GenericRecord avroRecord = createAvroRecord(item);
+        ProducerRecord<String, Object> record = new ProducerRecord<>("items", avroRecord);
+        try {
+            producer.send(record);
+        } catch (SerializationException e) {
+            // handle error
         }
+    }
+
+    @Override
+    public void close() {
+        producer.close();
     }
 
     private static Item createItem(int i) {

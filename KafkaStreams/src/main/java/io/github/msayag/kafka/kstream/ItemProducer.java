@@ -23,7 +23,21 @@ public class ItemProducer implements Closeable {
         producer = createProducer();
     }
 
-    public void send(Item item) {
+    public void produce() {
+        IntStream.iterate(1, i -> i + 1)
+                .mapToObj(ItemProducer::createItem)
+                .forEach(item -> {
+                    try {
+                        send(item);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        // handle exception
+                        Thread.currentThread().interrupt();
+                    }
+                });
+    }
+
+    private void send(Item item) {
         ProducerRecord<String, Item> record = new ProducerRecord<>("items", item);
         try {
             producer.send(record);
@@ -41,25 +55,8 @@ public class ItemProducer implements Closeable {
         return new KafkaProducer<>(props);
     }
 
-    //    @Override
     public void close() {
         producer.close();
-    }
-
-    public static void main(String... args) {
-        try (ItemProducer producer = new ItemProducer()) {
-            IntStream.iterate(1, i -> i + 1)
-                    .mapToObj(ItemProducer::createItem)
-                    .forEach(item -> {
-                        try {
-                            producer.send(item);
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            // handle exception
-                            Thread.currentThread().interrupt();
-                        }
-                    });
-        }
     }
 
     private static Item createItem(int i) {

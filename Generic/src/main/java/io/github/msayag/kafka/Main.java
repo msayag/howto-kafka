@@ -2,8 +2,8 @@ package io.github.msayag.kafka;
 
 import io.github.msayag.kafka.api.ItemConsumer;
 import io.github.msayag.kafka.api.ItemProducer;
-import io.github.msayag.kafka.json.JsonItemConsumer;
-import io.github.msayag.kafka.json.JsonItemProducer;
+import io.github.msayag.kafka.avro.GenericItemConsumer;
+import io.github.msayag.kafka.avro.GenericItemProducer;
 
 import java.io.IOException;
 
@@ -14,14 +14,14 @@ public class Main {
         } else {
             switch (args[0]) {
                 case "producer":
-                    try (ItemProducer producer = new JsonItemProducer()) {
+                    try (ItemProducer producer = new GenericItemProducer()) {
                         producer.produce();
                     } catch (IOException e) {
                         // handle exception
                     }
                     break;
                 case "consumer":
-                    try (ItemConsumer producer = new JsonItemConsumer()) {
+                    try (ItemConsumer producer = new GenericItemConsumer()) {
                         producer.consume();
                     } catch (IOException e) {
                         // handle exception

@@ -1,7 +1,7 @@
 group 'KafkaTutorial'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: "com.commercehub.gradle.plugin.avro"
 
 buildscript {
@@ -38,4 +38,12 @@ dependencies {
 avro {
     createSetters = false
     fieldVisibility = "PRIVATE"
+}
+
+mainClassName = "io.github.msayag.kafka.Main"
+
+run {
+    if (project.hasProperty("mode")) {
+        args mode
+    }
 }
