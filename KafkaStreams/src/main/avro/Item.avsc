@@ -1,0 +1,23 @@
+{
+  "namespace": "io.github.msayag.kafka.avro",
+  "type": "record",
+  "name": "Item",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "name": "sku",
+      "type": "long"
+    },
+    {
+      "name": "price",
+      "type": "double"
+    }
+  ]
+}
