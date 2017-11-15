@@ -8,18 +8,8 @@
    - [The Specific Way](#the-specific-way)
 * [Kafka Streams](#kafka-streams)
 
-> #### Execution  
-> All the code for this tutorial can be downloaded from the GitHub repository using the links above.  
-> To run the examples:
-> 1. Enter the folder of the specific section
-> 1. Run the Docker containers:  
->     `docker-compose up -d`
-> 1. Run the producer:
->     `./gradlew run -Pmode=producer`  
-> 1. Run the consumer:
->     `./gradlew run -Pmode=consumer`  
-> 1. When done, stop the dockers:
->     `docker-compose down`
+[Execution instructions](#execution-instructions)
+
 
 ## The Kafka broker
 [Kafka](https://kafka.apache.org/intro) is a distributed streaming platform and the Kafka broker is the channel through which the messages are passed.  
@@ -332,3 +322,17 @@ The consumer has to be rewritten as
     }
 ```
 The producer, on the other hand, doesn't have to be modified at all.
+
+---
+#### Execution instructions
+> All the code for this tutorial can be downloaded from the GitHub repository using the links above.  
+> To run the examples:
+> 1. Enter the folder of the specific section
+> 1. Run the Docker containers:  
+>     `docker-compose up -d`
+> 1. Run the producer:
+>     `./gradlew run -Pmode=producer`  
+> 1. Run the consumer:
+>     `./gradlew run -Pmode=consumer`  
+> 1. When done, stop the dockers:
+>     `docker-compose down`
