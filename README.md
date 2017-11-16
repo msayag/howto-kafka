@@ -60,7 +60,7 @@ The value is sent as a json string so StringSerializer is selected. .
 The object that is sent (Item) is a simple Java object (POJO) and should be serializable by the serialization library (Jackson in our case).
 
 ```java
-    public void send(Item item) throws IOException {
+    private void send(Item item) throws IOException {
         String message = mapper.writeValueAsString(item);
         ProducerRecord<String, String> record = new ProducerRecord<>("items", message);
         producer.send(record);
@@ -177,7 +177,7 @@ Let's first create a schema for the Item object:
 ```
 And the send() method should be modified to:
 ```java
-    public void send(Item item) {
+    private void send(Item item) {
         GenericRecord avroRecord = createAvroRecord(item);
         ProducerRecord<String, Object> record = new ProducerRecord<>("items", avroRecord);
         try {
@@ -264,7 +264,7 @@ The use of the generated class let us simplify the producer and the consumer.
 The producer doesn't have to create the schema explicitly, nor to create a GenericRecord before sending the message.
 The createSchema() methos is not used any more and can be removed, and the send() method is simplified to:
 ```java
-    public void send(Item item) {
+    private void send(Item item) {
         ProducerRecord<String, Item> record = new ProducerRecord<>("items", item);
         try {
             producer.send(record);
