@@ -9,7 +9,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
@@ -26,7 +26,7 @@ public class JsonItemConsumer implements ItemConsumer {
 
     @Override
     public void consume() {
-        consumer.subscribe(List.of("items"));
+        consumer.subscribe(Arrays.asList("items"));
         while (true) {
             try {
                 ConsumerRecords<String, String> records = consumer.poll(1000);

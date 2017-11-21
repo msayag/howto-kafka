@@ -8,7 +8,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.io.Closeable;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
@@ -24,7 +24,7 @@ public class SpecificItemConsumer implements Closeable {
     }
 
     public void consume() {
-        consumer.subscribe(List.of("items"));
+        consumer.subscribe(Arrays.asList("items"));
         while (true) {
             try {
                 ConsumerRecords<String, Item> records = consumer.poll(1000);

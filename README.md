@@ -1,5 +1,6 @@
 # (HowTo) Kafka, Streams and Avro serialization
 
+* [Requirements](#requirements)
 * [The Kafka Broker](#the-kafka-broker)
 * [Sending an Object as JSON](#sending-an-object-as-json)
 * [Sending an Object with Avro Serialization](#sending-an-object-with-avro-serialization)
@@ -7,14 +8,18 @@
    - [The Generic Way](#the-generic-way)
    - [The Specific Way](#the-specific-way)
 * [Kafka Streams](#kafka-streams)
+* [Execution instructions](#execution-instructions)
 
-[Execution instructions](#execution-instructions)
+## Requirements
+1. Java 8 or higher
+1. Docker and docker-compose  
+Instructions can be found in [this quickstart](https://docs.confluent.io/3.3.1/installation/docker/docs/quickstart.html) from Confluent. 
+1. [gradle](https://gradle.org/)
 
 
 ## The Kafka broker
 [Kafka](https://kafka.apache.org/intro) is a distributed streaming platform and the Kafka broker is the channel through which the messages are passed.  
-The easiest way to start a single Kafka broker locally is probably to run the pre-packaged Docker images with [this docker-compose.yml](Basic/docker-compose.yml) file.  
-If you have no experience with docker and docker compose you may want to read [this quickstart](https://docs.confluent.io/3.3.1/installation/docker/docs/quickstart.html) first. 
+The easiest way to start a single Kafka broker locally is probably to run the pre-packaged Docker images with this [docker-compose.yml](Basic/docker-compose.yml) file.  
 
 ```yaml
 version: '3'
@@ -88,7 +93,7 @@ The consumer reads the objects from subscribed topics and then convert and proce
 
 ```java
     public void consume() {
-        consumer.subscribe(List.of("items"));
+        consumer.subscribe(Arrays.asList("items"));
         while (true) {
             try {
                 ConsumerRecords<String, String> records = consumer.poll(1000);
