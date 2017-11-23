@@ -1,4 +1,4 @@
-# (HowTo) Kafka, Streams and Avro serialization
+# Kafka, Streams and Avro serialization
 
 * [Requirements](#requirements)
 * [The Kafka Broker](#the-kafka-broker)
