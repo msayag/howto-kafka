@@ -330,14 +330,16 @@ The producer, on the other hand, doesn't have to be modified at all.
 
 ---
 #### Execution instructions
-> All the code for this tutorial can be downloaded from the GitHub repository using the links above.  
-> To run the examples:
-> 1. Enter the folder of the specific section
-> 1. Run the Docker containers:  
->     `docker-compose up -d`
-> 1. Run the producer:
->     `./gradlew run -Pmode=producer`  
-> 1. Run the consumer:
->     `./gradlew run -Pmode=consumer`  
-> 1. When done, stop the dockers:
->     `docker-compose down`
+~~~
+All the code for this tutorial can be downloaded from the GitHub repository using the links above.  
+To run the examples:
+1. Enter the folder of the specific section
+2. Run the Docker containers:  
+    `docker-compose up -d`
+3. Run the producer:
+    `./gradlew run -Pmode=producer`  
+4. Run the consumer:
+    `./gradlew run -Pmode=consumer`  
+5. When done, stop the dockers:
+    `docker-compose down`
+~~~
