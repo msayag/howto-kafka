@@ -335,11 +335,11 @@ All the code for this tutorial can be downloaded from the GitHub repository usin
 To run the examples:
 1. Enter the folder of the specific section
 2. Run the Docker containers:  
-    `docker-compose up -d`
+    docker-compose up -d
 3. Run the producer:
-    `./gradlew run -Pmode=producer`  
+    ./gradlew run -Pmode=producer  
 4. Run the consumer:
-    `./gradlew run -Pmode=consumer`  
+    ./gradlew run -Pmode=consumer  
 5. When done, stop the dockers:
-    `docker-compose down`
+    docker-compose down  
 ~~~
