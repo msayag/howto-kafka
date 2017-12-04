@@ -59,8 +59,4 @@ public class SpecificItemConsumer implements Closeable {
     public void close() {
         consumer.close();
     }
-
-    public static void main(String[] args) {
-        new SpecificItemConsumer().consume();
-    }
 }
