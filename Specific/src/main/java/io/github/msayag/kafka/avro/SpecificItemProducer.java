@@ -51,9 +51,9 @@ public class SpecificItemProducer implements Closeable {
         props.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
         props.put(SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
+        props.put(COMPRESSION_TYPE_CONFIG, "snappy");
         return new KafkaProducer<>(props);
     }
-    //    @Override
 
     public void close() {
         producer.close();
